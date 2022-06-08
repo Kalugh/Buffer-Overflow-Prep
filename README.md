@@ -56,7 +56,7 @@ import socket
 ip = "MACHINE_IP" # Here introduce 127.0.0.1 for local or TryHackme's Machine IP
 port = 1337
 
-prefix = ""
+prefix = "OVERFLOW1 "
 offset = 0
 overflow = "A" * offset
 retn = ""
@@ -115,3 +115,58 @@ import mona
 mona.mona("help")
 mona.mona("config -set workingfolder c:\\logs\\%p")
 ```
+You need to do this everytime you turn on your pc.
+
+If you do this all right you'll see this with our last command:
+
+[![cc593dbe3e7a6ab673d27fe1e4c1e1c7.png](https://i.postimg.cc/05CRfCwb/cc593dbe3e7a6ab673d27fe1e4c1e1c7.png)](https://postimg.cc/3WWcrm9T)
+
+Now, we need to create a pattern, so we can know how much bytes can we put to get to EIP.
+
+```mona.mona("pattern_create 2000")``` Enter this in "Log".
+
+You should see this:
+
+[![c1e9cbf34e1914f2504c149861837c32.png](https://i.postimg.cc/tC0ks0T6/c1e9cbf34e1914f2504c149861837c32.png)](https://postimg.cc/MXDVLF1Z)
+
+Restart and Run your program a few times till it open this will be done everytime that we change the file.py
+
+You need to execute your python3 in your cmd like this: ```c:\YOUR_PATERN_PYTHON3\python.exe YOUR.PY```
+
+[![c5f08318b0473e0b4cf5922b81483227.png](https://i.postimg.cc/pTjBVkDx/c5f08318b0473e0b4cf5922b81483227.png)](https://postimg.cc/8J1vtRKn)
+
+Now in "Log" we need to execute the command: ```"mona.mona("pattern_offset EIP")"``` 
+
+This gonna compare our pattern to get how much bytes we need to get to EIP.
+
+[![6632609ce31c786d0df06b32ed0d0d62.png](https://i.postimg.cc/nzLt6j7v/6632609ce31c786d0df06b32ed0d0d62.png)](https://postimg.cc/v1Cjnm0B)
+
+We see that we need 1978 bytes to get to EIP so we gonna put this on payload: (\x41 means A in ASCII and \x42 means B in ASCII )
+
+[![9509072bfe829744e9818c7d7c1944a8.png](https://i.postimg.cc/85qNMkJM/9509072bfe829744e9818c7d7c1944a8.png)](https://postimg.cc/hzbkqB0t)
+
+We need to restart "oscp.exe" and run it till it's open. Execute your file.py and you should see this on EIP:
+
+[![65dad277ef0a729dc5cc05b235340f9a.png](https://i.postimg.cc/hjqBpD1B/65dad277ef0a729dc5cc05b235340f9a.png)](https://postimg.cc/4Kwq3T0L)
+
+If you can see this, all is going good! Well done!
+
+Now it's time to search badchars
+
+# Searching Badchars
+
+Go to "Log", execute: ```mona.mona('bytearray -cpb "\\x00"')``` 
+
+This will create a payload without the badchat \x00 that we asume that it's a badchar.
+
+We can see here "\x41" and "\x42" at the top of the stack.
+
+[![49443394b4bce14e67c3cb45bd2d755d.png](https://i.postimg.cc/QCQwC129/49443394b4bce14e67c3cb45bd2d755d.png)](https://postimg.cc/9wfJNRFC)
+
+[![ac1ff2ab0df93fab77e2c6006d0f091d.png](https://i.postimg.cc/xdP2prxN/ac1ff2ab0df93fab77e2c6006d0f091d.png)](https://postimg.cc/zL363Q1q)
+
+Paste it all into payload under ```payload+= "\x42" * 4``` 
+
+All like this:
+
+[![ac1ff2ab0df93fab77e2c6006d0f091d.png](https://i.postimg.cc/xdP2prxN/ac1ff2ab0df93fab77e2c6006d0f091d.png)](https://postimg.cc/zL363Q1q)
