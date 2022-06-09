@@ -177,3 +177,5 @@ Every time you need to check that EIP got our 4 "\x42"(B).
 
 Afther that go to the bottom zone and right click go to expresion : "esp"
 
+![4fceda96673b99b5a5d7dadab39990bb](https://user-images.githubusercontent.com/107114264/172812663-6484278d-5063-4464-ae04-a44f765bf10b.gif)
+
