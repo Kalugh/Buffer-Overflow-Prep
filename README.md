@@ -131,6 +131,8 @@ You should see this:
 
 Restart and Run your program a few times till it open this will be done everytime that we change the file.py
 
+![1f1d288e90f693cab1c220aa11660511](https://user-images.githubusercontent.com/107114264/172835109-231ca98d-34cd-43a3-b944-cdfe5852ac9c.png)
+
 You need to execute your python3 in your cmd like this: ```c:\YOUR_PATERN_PYTHON3\python.exe YOUR.PY```
 
 WARNING!!!: Execute your .py till the proggram reach it.
@@ -263,3 +265,28 @@ Restart the program run it till it charges and execute your .py do a compare, ``
 
 Look it up if EIP got 4 "\x42", if you got it we're right.
 
+Create out bytearray ```mona.mona('bytearray -cpb "\\x00"')```
+
+Restart the program run it till it charges and execute your .py do a compare, and it says that the next badchar is \x08
+
+![2551755fded53fc257501c51b7fa4699](https://user-images.githubusercontent.com/107114264/172834137-67451f8d-9144-4ab6-a4c3-dc3ae0a24716.png)
+
+Create again the bytearray with \x08 ```mona.mona('bytearray -cpb "\\x00\\x08"')```
+
+Restart the program run it till it charges and execute your .py do a compare, and it says that the next badchar is \x2c
+
+![856fbd7792caf8258a1b97ecba52d41b](https://user-images.githubusercontent.com/107114264/172834658-c23983c1-e42e-48cf-bdf3-8f56edee9ddb.png)
+
+Create again the bytearray with \x2c ```mona.mona('bytearray -cpb "\\x00\\x08\\x2c"')```
+
+Restart the program run it till it charges and execute your .py do a compare, and it says that the next badchar is \xad
+
+![7e99c52e392786b59a475c31689e5fb6](https://user-images.githubusercontent.com/107114264/172835356-efdb058a-2599-4624-905f-9e1564e22297.png)
+
+Create again the bytearray with \xad ```mona.mona('bytearray -cpb "\\x00\\x08\\x2c\\xad"')```
+
+Restart the program run it till it charges and execute your .py do a compare, and it says HOORAYYY!!!
+
+![f906f6e4b465b4f8d6db36990dc63f45](https://user-images.githubusercontent.com/107114264/172835763-0545bf54-14b6-4d75-8509-dfccc2129d4f.png)
+
+And this is all! Well done everyone, have a nice day!
