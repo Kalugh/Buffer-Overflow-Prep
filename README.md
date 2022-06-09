@@ -133,6 +133,8 @@ Restart and Run your program a few times till it open this will be done everytim
 
 You need to execute your python3 in your cmd like this: ```c:\YOUR_PATERN_PYTHON3\python.exe YOUR.PY```
 
+WARNING!!!: Execute your .py till the proggram reach it.
+
 ![68747470733a2f2f692e706f7374696d672e63632f70546a42566b44782f63356630383331386230343733653062346366353932326238313438333232372e706e67](https://user-images.githubusercontent.com/107114264/172814252-c90ba69d-1391-4960-9423-28d24e7259de.png)
 
 Now in "Log" we need to execute the command: ```"mona.mona("pattern_offset EIP")"``` 
@@ -157,7 +159,7 @@ If you can see this, all is going good! Well done!
 
 Now it's time to search badchars
 
-# Searching Badchars
+# Searching Badchars at OVERFLOW1
 
 Go to "Log", execute: ```mona.mona('bytearray -cpb "\\x00"')``` 
 
@@ -179,4 +181,85 @@ Afther that go to the bottom zone and right click go to expresion : "esp"
 
 ![4fceda96673b99b5a5d7dadab39990bb](https://user-images.githubusercontent.com/107114264/172812663-6484278d-5063-4464-ae04-a44f765bf10b.gif)
 
+We can see here that it starts at 01 but the 07 its not here:
+
+![52e419253cbed3792e260f9c30fdf3cb](https://user-images.githubusercontent.com/107114264/172815076-f186fc71-4a50-422a-a293-351f7cef954b.png)
+
+So we need to go to the "Log" and use: ```mona.mona('compare -f C:\\logs\\oscp\\bytearray.bin -a ESP')```
+
+It tell us that the "\x07" its a badchar:
+
+![e8ae746c63ce5549d1c3defab2f6ee96](https://user-images.githubusercontent.com/107114264/172815680-3021d560-a6bb-47d6-9908-21d6a69780c5.png)
+
+So we need to add it to our command and repeait it all again! ```mona.mona('bytearray -cpb "\\x00\\x07"')```
+
+Copy it all and pull it into the payload changing it to the last one.
+
+Do again the compare command and we can see that now we have the badchar x2e:
+
+![b1be3aa110e4a0218a506cdd862fbd76](https://user-images.githubusercontent.com/107114264/172816889-250d0a9d-2c7d-4d15-9e21-346ac9a5a740.png)
+
+We add it to the bytearray and execute the python: ```mona.mona('bytearray -cpb "\\x00\\x07\\x2e"')```
+
+Do a compare: ```mona.mona('compare -f C:\\logs\\oscp\\bytearray.bin -a ESP')```
+
+We can see that it says that \xa0 its a badchar too, so add it. ```mona.mona('bytearray -cpb "\\x00\\x07\\x2e\\xa0"')```
+
+![7033964f479dc50f7cf55ef02ca1e298](https://user-images.githubusercontent.com/107114264/172817925-196c97fa-bf48-4510-a372-a745f007b0bc.png)
+
+And change your payload and execute it again. Don't Forget to restart and run!
+
+Run a compare in "Log" and HOORAY!!
+
+![9428d3fbcdb56c0edb892ccdc74869e4](https://user-images.githubusercontent.com/107114264/172819011-ffb4d3c3-e380-4f82-88fd-5600cb37cc0d.png)
+
+# Searching Badchars OVERFLOW4
+
+We start again doing the same, first of all we need to create our pattern. ```mona.mona("pattern_create 3000")```
+
+And search it to know how much bytes we will need this time. ```mona.mona("pattern_offset EIP")```
+
+We will need 2026 bytes to get to EIP. Introduce it to the payload.
+
+![2e981d578fa9bcabb464ae461ab7958b](https://user-images.githubusercontent.com/107114264/172826322-2770230e-ad60-4955-8e32-18bb6329585c.png)
+
+Every time put 4 more B to see if we reach EIP.
+
+Let's find it out!
+
+We can check that the 4 "\x42" reach EIP so we can continue.
+
+Create again the bytearray only with \x00 and past it into the payload.
+
+Restart the program run it till it charges and execute your .py
+
+It says that the following badchar its \x9a add it first to: ```mona.mona('bytearray -cpb "\\x00\\xa9"')```
+
+![77beee699cf6487af5855b3b4091a7f6](https://user-images.githubusercontent.com/107114264/172829176-35bb2fda-6318-4357-addd-c3a6b1e9833b.png)
+
+Change it with the last payload.
+
+Restart the program run it till it charges and execute your .py do a compare, and it says that the next badchar is \xcd
+
+![d9bc587b26178c368c67c56bc922a63e](https://user-images.githubusercontent.com/107114264/172829218-93b0b67f-9de6-4b04-b1cd-0e1fbf2907d7.png)
+
+Add it to your bytearray. ```mona.mona('bytearray -cpb "\\x00\\xa9\\xcd"')```
+
+Restart the program run it till it charges and execute your .py do a compare, and it says that the next badchar is \xd4
+
+![2b32f2f7626beb3b02c033d21050f32a](https://user-images.githubusercontent.com/107114264/172830857-ac49af17-8285-44a3-9b43-604d29a593bd.png)
+
+Add it to your bytearray. ```mona.mona('bytearray -cpb "\\x00\\xa9\\xcd\\xd4"')```
+
+Restart the program run it till it charges and execute your .py do a compare and HOORAYY!!!!
+
+![6f9a6a3800666bde2471ee8cbc6bb2a2](https://user-images.githubusercontent.com/107114264/172830676-b7b511e2-f170-412d-9423-305bea831799.png)
+
+# Searching Badchars OVERFLOW6
+
+We start again doing the same, first of all we need to create our pattern. ```mona.mona("pattern_create 2000")```
+
+Restart the program run it till it charges and execute your .py do a compare, ```mona.mona("pattern_offset EIP")``` and it says that the bytes needed are 1034.
+
+Look it up if EIP got 4 "\x42", if you got it we're right.
 
