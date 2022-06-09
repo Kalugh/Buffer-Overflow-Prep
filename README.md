@@ -149,6 +149,10 @@ We need to restart "oscp.exe" and run it till it's open. Execute your file.py an
 
 [![65dad277ef0a729dc5cc05b235340f9a.png](https://i.postimg.cc/hjqBpD1B/65dad277ef0a729dc5cc05b235340f9a.png)](https://postimg.cc/4Kwq3T0L)
 
+We can see here "\x41" and "\x42" at the top of the stack.
+
+[![49443394b4bce14e67c3cb45bd2d755d.png](https://i.postimg.cc/QCQwC129/49443394b4bce14e67c3cb45bd2d755d.png)](https://postimg.cc/9wfJNRFC)
+
 If you can see this, all is going good! Well done!
 
 Now it's time to search badchars
@@ -159,14 +163,17 @@ Go to "Log", execute: ```mona.mona('bytearray -cpb "\\x00"')```
 
 This will create a payload without the badchat \x00 that we asume that it's a badchar.
 
-We can see here "\x41" and "\x42" at the top of the stack.
-
-[![49443394b4bce14e67c3cb45bd2d755d.png](https://i.postimg.cc/QCQwC129/49443394b4bce14e67c3cb45bd2d755d.png)](https://postimg.cc/9wfJNRFC)
-
 [![ac1ff2ab0df93fab77e2c6006d0f091d.png](https://i.postimg.cc/xdP2prxN/ac1ff2ab0df93fab77e2c6006d0f091d.png)](https://postimg.cc/zL363Q1q)
 
 Paste it all into payload under ```payload+= "\x42" * 4``` 
 
 All like this:
 
-[![ac1ff2ab0df93fab77e2c6006d0f091d.png](https://i.postimg.cc/xdP2prxN/ac1ff2ab0df93fab77e2c6006d0f091d.png)](https://postimg.cc/zL363Q1q)
+[![e91dc714947f2eb896159a816bc4e94b.png](https://i.postimg.cc/ydC41ZBw/e91dc714947f2eb896159a816bc4e94b.png)](https://postimg.cc/PLyFKNC4)
+
+Now, We need to restart the program and run it again to execute our payload with the file.py
+
+Every time you need to check that EIP got our 4 "\x42"(B).
+
+Afther that go to the bottom zone and right click go to expresion : "esp"
+
